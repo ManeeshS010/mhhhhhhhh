@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ws.WebServiceMessage;
@@ -32,7 +32,7 @@ class PasswordClientTest {
     @Mock
     private WebServiceTemplate webServiceTemplate;
 
-    @InjectMocks
+    @Spy
     private PasswordClient passwordClient;
 
     private static final String CLEAR_PASSWORD_API = "http://test.api/password";
@@ -41,7 +41,7 @@ class PasswordClientTest {
     @BeforeEach
     void setUp() {
         ReflectionTestUtils.setField(passwordClient, "clearPasswordApi", CLEAR_PASSWORD_API);
-        when(passwordClient.getWebServiceTemplate()).thenReturn(webServiceTemplate);
+        doReturn(webServiceTemplate).when(passwordClient).getWebServiceTemplate();
     }
 
     @Test
